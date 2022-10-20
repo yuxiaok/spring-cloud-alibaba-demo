@@ -3,9 +3,9 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>ltd.newbee.cloud</groupId>
-    <artifactId>service-demo1</artifactId>
+    <artifactId>service-demo2</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>service-demo1</name>
+    <name>service-demo2</name>
     <description>service-demo</description>
 
     <parent>

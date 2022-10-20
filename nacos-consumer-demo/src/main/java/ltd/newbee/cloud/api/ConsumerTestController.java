@@ -1,9 +1,9 @@
-package ltd.newbee.cloud.web;
+package ltd.newbee.cloud.api;
 
-import ltd.newbee.cloud.service.HelloServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * <p>****************************************************************************
@@ -12,20 +12,27 @@ import org.springframework.web.bind.annotation.RestController;
  * <ul style="margin:15px;">
  * <li>Description : TODO </li>
  * <li>Version : 1.0.0</li>
- * <li>Creation : 2022年10⽉16⽇</li>
+ * <li>Creation : 2022年10⽉18⽇</li>
  * <li>@author : kai.yu</li>
  * </ul>
  * <p>****************************************************************************
  * </p>
  */
 @RestController
-public class HelloController {
+public class ConsumerTestController {
+
+	private static final String SERVICE_URL = "http://newbee-cloud-goods-service";
 
 	@Autowired
-	private HelloServiceImpl helloService;
+	private RestTemplate restTemplate;
 
-	@GetMapping("/hello")
-	public String hello() {
-		return "hello from :" + helloService.getName();
+	@GetMapping("/nacosRegTest")
+	public String nacosRegTest() {
+		return "nacosRegTest";
+	}
+
+	@GetMapping("/consumerTest")
+	public String consumerTest() {
+		return restTemplate.getForObject(SERVICE_URL + "/goodsServiceTest", String.class);
 	}
 }

@@ -1,7 +1,6 @@
-package ltd.newbee.cloud.web;
+package ltd.newbee.cloud.api;
 
-import ltd.newbee.cloud.service.HelloServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,20 +11,20 @@ import org.springframework.web.bind.annotation.RestController;
  * <ul style="margin:15px;">
  * <li>Description : TODO </li>
  * <li>Version : 1.0.0</li>
- * <li>Creation : 2022年10⽉16⽇</li>
+ * <li>Creation : 2022年10⽉17⽇</li>
  * <li>@author : kai.yu</li>
  * </ul>
  * <p>****************************************************************************
  * </p>
  */
 @RestController
-public class HelloController {
+public class NewBeeCloudGoodsAPI {
 
-	@Autowired
-	private HelloServiceImpl helloService;
+	@Value("${server.port}")
+	private String applicationServerPort;
 
-	@GetMapping("/hello")
-	public String hello() {
-		return "hello from :" + helloService.getName();
+	@GetMapping("/goodsServiceTest")
+	public String goodsServiceTest() {
+		return "this is goodsService from port：" + applicationServerPort;
 	}
 }
