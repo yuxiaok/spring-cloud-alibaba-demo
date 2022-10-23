@@ -26,6 +26,8 @@
         <module>request-demo1</module>
         <module>nacos-provider-demo</module>
         <module>nacos-consumer-demo</module>
+        <module>nacos-provider-demo2</module>
+        <module>nacos-provider-demo3</module>
     </modules>
 
     <dependencyManagement>

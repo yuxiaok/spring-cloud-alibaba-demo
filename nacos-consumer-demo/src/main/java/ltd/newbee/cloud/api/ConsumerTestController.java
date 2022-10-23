@@ -35,4 +35,9 @@ public class ConsumerTestController {
 	public String consumerTest() {
 		return restTemplate.getForObject(SERVICE_URL + "/goodsServiceTest", String.class);
 	}
+
+	@GetMapping("/loadBalancerTest")
+	public String loadBalancerTest() {
+		return restTemplate.getForObject(SERVICE_URL + "/goodsServiceTest", String.class);
+	}
 }
