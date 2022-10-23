@@ -28,6 +28,9 @@
         <module>nacos-consumer-demo</module>
         <module>nacos-provider-demo2</module>
         <module>nacos-provider-demo3</module>
+        <module>order-service-demo</module>
+        <module>shopcart-service-demo</module>
+        <module>service-common</module>
     </modules>
 
     <dependencyManagement>
