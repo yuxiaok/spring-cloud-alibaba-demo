@@ -1,7 +1,6 @@
 package ltd.order.cloud.newbee.api;
 
-import ltd.order.cloud.newbee.openfeign.NewBeeGoodsDemoService;
-import ltd.order.cloud.newbee.openfeign.NewBeeShopCartDemoService;
+import ltd.order.cloud.newbee.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,24 +48,32 @@ public class NewBeeCloudOrderAPI {
 //	}
 
 
-	@Autowired
-	private NewBeeGoodsDemoService newBeeGoodsDemoService;
+//	@Autowired
+//	private NewBeeGoodsDemoService newBeeGoodsDemoService;
+//
+//	@Autowired
+//	private NewBeeShopCartDemoService newBeeShopCartDemoService;
+//
+//	@GetMapping("/order/saveOrder")
+//	public String saveOrder(@RequestParam("cartId") int cartId, @RequestParam("goodsId") int goodsId) {
+//		// 简单的模拟下单流程，包括服务间的调用流程。后续openfeign相关的改造和优化将基于当前项目进行改造。
+//
+//		// 调用商品服务
+//		String goodsResult = newBeeGoodsDemoService.goodsDetail(goodsId);
+//
+//		// 调用购物车服务
+//		String cartResult = newBeeShopCartDemoService.cartItemDetail(cartId);
+//
+//		// 执行下单逻辑
+//
+//		return "success! goodsResult={" + goodsResult + "},cartResult={" + cartResult + "}";
+//	}
 
 	@Autowired
-	private NewBeeShopCartDemoService newBeeShopCartDemoService;
+	private OrderService orderService;
 
 	@GetMapping("/order/saveOrder")
-	public String saveOrder(@RequestParam("cartId") int cartId, @RequestParam("goodsId") int goodsId) {
-		// 简单的模拟下单流程，包括服务间的调用流程。后续openfeign相关的改造和优化将基于当前项目进行改造。
-
-		// 调用商品服务
-		String goodsResult = newBeeGoodsDemoService.goodsDetail(goodsId);
-
-		// 调用购物车服务
-		String cartResult = newBeeShopCartDemoService.cartItemDetail(cartId);
-
-		// 执行下单逻辑
-
-		return "success! goodsResult={" + goodsResult + "},cartResult={" + cartResult + "}";
+	public Boolean saveOrder(@RequestParam("cartId") int cartId) {
+		return orderService.saveOrder(cartId);
 	}
 }

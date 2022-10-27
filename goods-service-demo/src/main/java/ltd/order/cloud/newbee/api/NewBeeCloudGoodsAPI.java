@@ -2,7 +2,9 @@ package ltd.order.cloud.newbee.api;
 
 import ltd.newbee.cloud.entity.NewBeeGoodsInfo;
 import ltd.newbee.cloud.entity.param.ComplexObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -138,4 +140,22 @@ public class NewBeeCloudGoodsAPI {
 		return "请求goodsList，当前服务的端口号为" + applicationServerPort;
 	}
 
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+
+	@PutMapping("/goods/{goodsId}")
+	public Boolean deStock(@PathVariable("goodsId") int goodsId) {
+		// 减库存操作
+		int result = jdbcTemplate.update("update tb_goods set goods_stock = goods_stock - 1 where goods_id = " + goodsId);
+		//模拟网络波动问题
+//		try {
+//			Thread.sleep(10 * 1000);
+//		} catch (InterruptedException e) {
+//			throw new RuntimeException(e);
+//		}
+		if (result > 0) {
+			return true;
+		}
+		return false;
+	}
 }

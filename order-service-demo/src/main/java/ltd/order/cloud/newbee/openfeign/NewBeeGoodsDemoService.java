@@ -43,4 +43,7 @@ public interface NewBeeGoodsDemoService {
 
 	@PostMapping(value = "/testComplexObject")
 	ComplexObject testComplexObject(@RequestBody ComplexObject complexObject);
+
+	@PutMapping("/{goodsId}")
+	Boolean deStock(@PathVariable("goodsId") int goodsId);
 }

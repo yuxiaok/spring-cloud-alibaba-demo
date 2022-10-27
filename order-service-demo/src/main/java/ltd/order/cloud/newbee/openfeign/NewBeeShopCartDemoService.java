@@ -1,8 +1,10 @@
 package ltd.order.cloud.newbee.openfeign;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * <p>****************************************************************************
@@ -24,4 +26,10 @@ public interface NewBeeShopCartDemoService {
 
 	@GetMapping("/{cartId}")
 	String cartItemDetail(@PathVariable("cartId") int cartId);
+
+	@GetMapping("/getGoodsId")
+	int getGoodsId(@RequestParam("cartId") int cartId);
+
+	@DeleteMapping("/{cartId}")
+	Boolean deleteItem(@PathVariable("cartId") int cartId);
 }
