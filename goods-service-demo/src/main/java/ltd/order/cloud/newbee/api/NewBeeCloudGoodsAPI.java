@@ -1,5 +1,7 @@
 package ltd.order.cloud.newbee.api;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import ltd.newbee.cloud.entity.NewBeeGoodsInfo;
 import ltd.newbee.cloud.entity.param.ComplexObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,16 @@ public class NewBeeCloudGoodsAPI {
 	private String applicationServerPort;// 读取当前应用的启动端口
 
 	@GetMapping("/goods/{goodsId}")
+	@SentinelResource(value = "/goods/{goodsId}", blockHandler = "blockHandler", fallback = "fallback")
 	public String goodsDetail(@PathVariable("goodsId") int goodsId) {
+		//模拟慢调用比例熔断
+//		try {
+//			Thread.sleep(1 * 1000);
+//		} catch (InterruptedException e) {
+//			throw new RuntimeException(e);
+//		}
+		//模拟异常熔断
+		int i = 13 / 0;
 		// 根据id查询商品并返回给调用端
 		if (goodsId < 1 || goodsId > 100000) {
 			return "查询商品为空，当前服务的端口号为" + applicationServerPort;
@@ -38,6 +49,14 @@ public class NewBeeCloudGoodsAPI {
 		String goodsName = "商品" + goodsId;
 		// 返回信息给调用端
 		return goodsName + "，当前服务的端口号为" + applicationServerPort;
+	}
+
+	public String blockHandler(int goodsId, BlockException blockException) {
+		return "sentinel";
+	}
+
+	public String fallback(int goodsId, Throwable e) {
+		return "fallback";
 	}
 
 	@GetMapping("/goods")

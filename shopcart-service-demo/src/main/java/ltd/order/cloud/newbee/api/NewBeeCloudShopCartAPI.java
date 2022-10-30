@@ -1,5 +1,6 @@
 package ltd.order.cloud.newbee.api;
 
+import ltd.order.cloud.newbee.openfeign.NewBeeGoodsDemoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -25,8 +26,12 @@ public class NewBeeCloudShopCartAPI {
 	@Value("${server.port}")
 	private String applicationServerPort;// 读取当前应用的启动端口
 
+	@Autowired
+	private NewBeeGoodsDemoService newBeeGoodsDemoService;
+
 	@GetMapping("/shop-cart/{cartId}")
 	public String cartItemDetail(@PathVariable("cartId") int cartId) {
+		String goodsDetail = newBeeGoodsDemoService.goodsDetail1(2025);
 		// 根据id查询商品并返回给调用端
 		if (cartId < 0 || cartId > 100000) {
 			return "查询购物项为空，当前服务的端口号为" + applicationServerPort;
