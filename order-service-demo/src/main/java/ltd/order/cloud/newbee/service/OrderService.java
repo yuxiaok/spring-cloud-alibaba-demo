@@ -1,5 +1,6 @@
 package ltd.order.cloud.newbee.service;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import io.seata.spring.annotation.GlobalTransactional;
 import ltd.order.cloud.newbee.openfeign.NewBeeGoodsDemoService;
 import ltd.order.cloud.newbee.openfeign.NewBeeShopCartDemoService;
@@ -60,5 +61,10 @@ public class OrderService {
 			return false;
 		}
 		return false;
+	}
+
+	@SentinelResource(value = "getNumber")
+	public String getNumber(int num) {
+		return "";
 	}
 }
