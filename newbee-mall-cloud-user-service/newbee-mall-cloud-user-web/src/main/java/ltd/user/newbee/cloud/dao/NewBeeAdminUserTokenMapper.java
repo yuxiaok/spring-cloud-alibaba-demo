@@ -8,7 +8,7 @@
  */
 package ltd.user.newbee.cloud.dao;
 
-import ltd.user.newbee.cloud.entity.AdminUserToken;
+import ltd.common.newbee.cloud.pojo.AdminUserToken;
 
 public interface NewBeeAdminUserTokenMapper {
 	int deleteByPrimaryKey(Long userId);

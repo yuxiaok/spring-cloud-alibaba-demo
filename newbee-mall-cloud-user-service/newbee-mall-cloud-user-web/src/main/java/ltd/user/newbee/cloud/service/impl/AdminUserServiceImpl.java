@@ -8,18 +8,21 @@
  */
 package ltd.user.newbee.cloud.service.impl;
 
+import ltd.common.newbee.cloud.pojo.AdminUserToken;
 import ltd.common.newbee.cloud.util.NumberUtil;
 import ltd.common.newbee.cloud.util.SystemUtil;
 import ltd.user.newbee.cloud.common.ServiceResultEnum;
 import ltd.user.newbee.cloud.dao.AdminUserMapper;
 import ltd.user.newbee.cloud.dao.NewBeeAdminUserTokenMapper;
 import ltd.user.newbee.cloud.entity.AdminUser;
-import ltd.user.newbee.cloud.entity.AdminUserToken;
 import ltd.user.newbee.cloud.service.AdminUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class AdminUserServiceImpl implements AdminUserService {
@@ -30,38 +33,47 @@ public class AdminUserServiceImpl implements AdminUserService {
 	@Resource
 	private NewBeeAdminUserTokenMapper newBeeAdminUserTokenMapper;
 
+	@Autowired
+	private RedisTemplate redisTemplate;
+
 	@Override
 	public String login(String userName, String password) {
 		AdminUser loginAdminUser = adminUserMapper.login(userName, password);
 		if (loginAdminUser != null) {
 			//登录后即执行修改token的操作
 			String token = getNewToken(System.currentTimeMillis() + "", loginAdminUser.getAdminUserId());
-			AdminUserToken adminUserToken = newBeeAdminUserTokenMapper.selectByPrimaryKey(loginAdminUser.getAdminUserId());
-			//当前时间
-			Date now = new Date();
-			//过期时间
-			Date expireTime = new Date(now.getTime() + 2 * 24 * 3600 * 1000);//过期时间 48 小时
-			if (adminUserToken == null) {
-				adminUserToken = new AdminUserToken();
-				adminUserToken.setAdminUserId(loginAdminUser.getAdminUserId());
-				adminUserToken.setToken(token);
-				adminUserToken.setUpdateTime(now);
-				adminUserToken.setExpireTime(expireTime);
-				//新增一条token数据
-				if (newBeeAdminUserTokenMapper.insertSelective(adminUserToken) > 0) {
-					//新增成功后返回
-					return token;
-				}
-			} else {
-				adminUserToken.setToken(token);
-				adminUserToken.setUpdateTime(now);
-				adminUserToken.setExpireTime(expireTime);
-				//更新
-				if (newBeeAdminUserTokenMapper.updateByPrimaryKeySelective(adminUserToken) > 0) {
-					//修改成功后返回
-					return token;
-				}
-			}
+			AdminUserToken adminUserToken = new AdminUserToken();
+			adminUserToken.setAdminUserId(loginAdminUser.getAdminUserId());
+			adminUserToken.setToken(token);
+			ValueOperations<String, AdminUserToken> valueOperations = redisTemplate.opsForValue();
+			valueOperations.set(token, adminUserToken, 2 * 24 * 60 * 60, TimeUnit.SECONDS);
+			return token;
+//					AdminUserToken adminUserToken = newBeeAdminUserTokenMapper.selectByPrimaryKey(loginAdminUser.getAdminUserId());
+//			//当前时间
+//			Date now = new Date();
+//			//过期时间
+//			Date expireTime = new Date(now.getTime() + 2 * 24 * 3600 * 1000);//过期时间 48 小时
+//			if (adminUserToken == null) {
+//				adminUserToken = new AdminUserToken();
+//				adminUserToken.setAdminUserId(loginAdminUser.getAdminUserId());
+//				adminUserToken.setToken(token);
+//				adminUserToken.setUpdateTime(now);
+//				adminUserToken.setExpireTime(expireTime);
+//				//新增一条token数据
+//				if (newBeeAdminUserTokenMapper.insertSelective(adminUserToken) > 0) {
+//					//新增成功后返回
+//					return token;
+//				}
+//			} else {
+//				adminUserToken.setToken(token);
+//				adminUserToken.setUpdateTime(now);
+//				adminUserToken.setExpireTime(expireTime);
+//				//更新
+//				if (newBeeAdminUserTokenMapper.updateByPrimaryKeySelective(adminUserToken) > 0) {
+//					//修改成功后返回
+//					return token;
+//				}
+//			}
 
 		}
 		return ServiceResultEnum.LOGIN_ERROR.getResult();

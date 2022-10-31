@@ -39,6 +39,7 @@
         <module>gateway-demo2</module>
         <module>newbee-malll-cloud-gateway-admin</module>
         <module>newbee-mall-cloud-user-service</module>
+        <module>newbee-mall-cloud-common</module>
     </modules>
 
     <dependencyManagement>

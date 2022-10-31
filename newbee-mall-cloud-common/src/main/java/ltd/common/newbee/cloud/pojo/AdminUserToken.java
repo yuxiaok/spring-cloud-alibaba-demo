@@ -6,14 +6,18 @@
  * Copyright (c) 2019-2021 十三 all rights reserved.
  * 版权所有，侵权必究！
  */
-package ltd.user.newbee.cloud.entity;
+package ltd.common.newbee.cloud.pojo;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class AdminUserToken {
+public class AdminUserToken implements Serializable {
+
+	private static final long serialVersionUID = 1490543703489060505L;
+	
 	private Long adminUserId;
 
 	private String token;

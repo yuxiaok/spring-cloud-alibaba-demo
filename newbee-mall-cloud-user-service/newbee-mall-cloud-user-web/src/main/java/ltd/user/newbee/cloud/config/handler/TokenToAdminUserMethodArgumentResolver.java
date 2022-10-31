@@ -9,13 +9,15 @@
 package ltd.user.newbee.cloud.config.handler;
 
 import ltd.common.newbee.cloud.exception.NewBeeMallException;
+import ltd.common.newbee.cloud.pojo.AdminUserToken;
 import ltd.user.newbee.cloud.common.Constants;
 import ltd.user.newbee.cloud.common.ServiceResultEnum;
 import ltd.user.newbee.cloud.config.annotation.TokenToAdminUser;
 import ltd.user.newbee.cloud.dao.NewBeeAdminUserTokenMapper;
-import ltd.user.newbee.cloud.entity.AdminUserToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -28,9 +30,13 @@ public class TokenToAdminUserMethodArgumentResolver implements HandlerMethodArgu
 	@Autowired
 	private NewBeeAdminUserTokenMapper newBeeAdminUserTokenMapper;
 
+	@Autowired
+	private RedisTemplate redisTemplate;
+
 	public TokenToAdminUserMethodArgumentResolver() {
 	}
 
+	@Override
 	public boolean supportsParameter(MethodParameter parameter) {
 		if (parameter.hasParameterAnnotation(TokenToAdminUser.class)) {
 			return true;
@@ -38,15 +44,21 @@ public class TokenToAdminUserMethodArgumentResolver implements HandlerMethodArgu
 		return false;
 	}
 
+	@Override
 	public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
 		if (parameter.getParameterAnnotation(TokenToAdminUser.class) instanceof TokenToAdminUser) {
 			String token = webRequest.getHeader("token");
 			if (null != token && !"".equals(token) && token.length() == Constants.TOKEN_LENGTH) {
-				AdminUserToken adminUserToken = newBeeAdminUserTokenMapper.selectByToken(token);
+//				AdminUserToken adminUserToken = newBeeAdminUserTokenMapper.selectByToken(token);
+//				if (adminUserToken == null) {
+//					NewBeeMallException.fail(ServiceResultEnum.ADMIN_NOT_LOGIN_ERROR.getResult());
+//				} else if (adminUserToken.getExpireTime().getTime() <= System.currentTimeMillis()) {
+//					NewBeeMallException.fail(ServiceResultEnum.ADMIN_TOKEN_EXPIRE_ERROR.getResult());
+//				}
+				ValueOperations<String, AdminUserToken> valueOperations = redisTemplate.opsForValue();
+				AdminUserToken adminUserToken = valueOperations.get(token);
 				if (adminUserToken == null) {
-					NewBeeMallException.fail(ServiceResultEnum.ADMIN_NOT_LOGIN_ERROR.getResult());
-				} else if (adminUserToken.getExpireTime().getTime() <= System.currentTimeMillis()) {
-					NewBeeMallException.fail(ServiceResultEnum.ADMIN_TOKEN_EXPIRE_ERROR.getResult());
+					NewBeeMallException.fail("ADMIN_NOT_LOGIN_ERROR");
 				}
 				return adminUserToken;
 			} else {

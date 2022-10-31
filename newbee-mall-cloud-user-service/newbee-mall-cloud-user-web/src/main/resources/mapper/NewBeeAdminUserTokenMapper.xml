@@ -9,7 +9,7 @@ Copyright (c) 2019-2021 十三 all rights reserved.
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ltd.user.newbee.cloud.dao.NewBeeAdminUserTokenMapper">
-    <resultMap id="BaseResultMap" type="ltd.user.newbee.cloud.entity.AdminUserToken">
+    <resultMap id="BaseResultMap" type="ltd.common.newbee.cloud.pojo.AdminUserToken">
         <id column="admin_user_id" jdbcType="BIGINT" property="adminUserId"/>
         <result column="token" jdbcType="VARCHAR" property="token"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
@@ -36,13 +36,13 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         from tb_newbee_mall_admin_user_token
         where admin_user_id = #{adminUserId,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="ltd.user.newbee.cloud.entity.AdminUserToken">
+    <insert id="insert" parameterType="ltd.common.newbee.cloud.pojo.AdminUserToken">
         insert into tb_newbee_mall_admin_user_token (admin_user_id, token, update_time,
                                                      expire_time)
         values (#{adminUserId,jdbcType=BIGINT}, #{token,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
                 #{expireTime,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="ltd.user.newbee.cloud.entity.AdminUserToken">
+    <insert id="insertSelective" parameterType="ltd.common.newbee.cloud.pojo.AdminUserToken">
         insert into tb_newbee_mall_admin_user_token
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="adminUserId != null">
@@ -73,7 +73,7 @@ Copyright (c) 2019-2021 十三 all rights reserved.
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="ltd.user.newbee.cloud.entity.AdminUserToken">
+    <update id="updateByPrimaryKeySelective" parameterType="ltd.common.newbee.cloud.pojo.AdminUserToken">
         update tb_newbee_mall_admin_user_token
         <set>
             <if test="token != null">
@@ -88,7 +88,7 @@ Copyright (c) 2019-2021 十三 all rights reserved.
         </set>
         where admin_user_id = #{adminUserId,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="ltd.user.newbee.cloud.entity.AdminUserToken">
+    <update id="updateByPrimaryKey" parameterType="ltd.common.newbee.cloud.pojo.AdminUserToken">
         update tb_newbee_mall_admin_user_token
         set token       = #{token,jdbcType=VARCHAR},
             update_time = #{updateTime,jdbcType=TIMESTAMP},

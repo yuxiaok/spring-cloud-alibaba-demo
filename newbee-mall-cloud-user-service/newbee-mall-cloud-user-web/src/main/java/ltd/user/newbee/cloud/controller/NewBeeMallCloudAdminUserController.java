@@ -2,6 +2,7 @@ package ltd.user.newbee.cloud.controller;
 
 import ltd.common.newbee.cloud.dto.Result;
 import ltd.common.newbee.cloud.dto.ResultGenerator;
+import ltd.common.newbee.cloud.pojo.AdminUserToken;
 import ltd.user.newbee.cloud.common.Constants;
 import ltd.user.newbee.cloud.common.ServiceResultEnum;
 import ltd.user.newbee.cloud.config.annotation.TokenToAdminUser;
@@ -9,7 +10,6 @@ import ltd.user.newbee.cloud.controller.param.AdminLoginParam;
 import ltd.user.newbee.cloud.controller.param.UpdateAdminNameParam;
 import ltd.user.newbee.cloud.controller.param.UpdateAdminPasswordParam;
 import ltd.user.newbee.cloud.entity.AdminUser;
-import ltd.user.newbee.cloud.entity.AdminUserToken;
 import ltd.user.newbee.cloud.service.AdminUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +47,7 @@ public class NewBeeMallCloudAdminUserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(NewBeeMallCloudAdminUserController.class);
 
-	@RequestMapping(value = "/adminUser/login", method = RequestMethod.POST)
+	@RequestMapping(value = "/users/admin/login", method = RequestMethod.POST)
 	public Result<String> login(@RequestBody @Valid AdminLoginParam adminLoginParam) {
 		String loginResult = adminUserService.login(adminLoginParam.getUserName(), adminLoginParam.getPasswordMd5());
 		logger.info("manage login api,adminName={},loginResult={}", adminLoginParam.getUserName(), loginResult);
@@ -62,7 +62,7 @@ public class NewBeeMallCloudAdminUserController {
 		return ResultGenerator.genFailResult(loginResult);
 	}
 
-	@RequestMapping(value = "/adminUser/profile", method = RequestMethod.GET)
+	@RequestMapping(value = "/users/admin/profile", method = RequestMethod.GET)
 	public Result profile(@TokenToAdminUser AdminUserToken adminUser) {
 		logger.info("adminUser:{}", adminUser.toString());
 		AdminUser adminUserEntity = adminUserService.getUserDetailById(adminUser.getAdminUserId());
@@ -75,7 +75,7 @@ public class NewBeeMallCloudAdminUserController {
 		return ResultGenerator.genFailResult(ServiceResultEnum.DATA_NOT_EXIST.getResult());
 	}
 
-	@RequestMapping(value = "/adminUser/password", method = RequestMethod.PUT)
+	@RequestMapping(value = "/users/admin/password", method = RequestMethod.PUT)
 	public Result passwordUpdate(@RequestBody @Valid UpdateAdminPasswordParam adminPasswordParam, @TokenToAdminUser AdminUserToken adminUser) {
 		logger.info("adminUser:{}", adminUser.toString());
 		if (adminUserService.updatePassword(adminUser.getAdminUserId(), adminPasswordParam.getOriginalPassword(), adminPasswordParam.getNewPassword())) {
@@ -85,7 +85,7 @@ public class NewBeeMallCloudAdminUserController {
 		}
 	}
 
-	@RequestMapping(value = "/adminUser/name", method = RequestMethod.PUT)
+	@RequestMapping(value = "/users/admin/name", method = RequestMethod.PUT)
 	public Result nameUpdate(@RequestBody @Valid UpdateAdminNameParam adminNameParam, @TokenToAdminUser AdminUserToken adminUser) {
 		logger.info("adminUser:{}", adminUser.toString());
 		if (adminUserService.updateName(adminUser.getAdminUserId(), adminNameParam.getLoginUserName(), adminNameParam.getNickName())) {
@@ -95,7 +95,7 @@ public class NewBeeMallCloudAdminUserController {
 		}
 	}
 
-	@RequestMapping(value = "/logout", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/users/admin/logout", method = RequestMethod.DELETE)
 	public Result logout(@TokenToAdminUser AdminUserToken adminUser) {
 		logger.info("adminUser:{}", adminUser.toString());
 		adminUserService.logout(adminUser.getAdminUserId());
