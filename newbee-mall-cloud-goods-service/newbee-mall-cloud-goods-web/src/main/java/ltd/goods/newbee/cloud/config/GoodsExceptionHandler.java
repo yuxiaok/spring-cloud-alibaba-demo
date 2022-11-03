@@ -6,7 +6,7 @@
  * Copyright (c) 2019-2021 十三 all rights reserved.
  * 版权所有，侵权必究！
  */
-package ltd.user.newbee.cloud.config;
+package ltd.goods.newbee.cloud.config;
 
 import ltd.common.newbee.cloud.common.ServiceResultEnum;
 import ltd.common.newbee.cloud.dto.Result;
@@ -24,7 +24,7 @@ import java.util.Objects;
  * newbee-mall全局异常处理
  */
 @RestControllerAdvice
-public class AdminUserExceptionHandler {
+public class GoodsExceptionHandler {
 
 	@ExceptionHandler(BindException.class)
 	public Object bindException(BindException e) {

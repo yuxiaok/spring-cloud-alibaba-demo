@@ -6,7 +6,7 @@
  * Copyright (c) 2019-2021 十三 all rights reserved.
  * 版权所有，侵权必究！
  */
-package ltd.user.newbee.cloud.common;
+package ltd.common.newbee.cloud.common;
 
 public enum ServiceResultEnum {
 	ERROR("error"),

@@ -1,10 +1,10 @@
 package ltd.user.newbee.cloud.controller;
 
+import ltd.common.newbee.cloud.common.Constants;
+import ltd.common.newbee.cloud.common.ServiceResultEnum;
 import ltd.common.newbee.cloud.dto.Result;
 import ltd.common.newbee.cloud.dto.ResultGenerator;
 import ltd.common.newbee.cloud.pojo.AdminUserToken;
-import ltd.user.newbee.cloud.common.Constants;
-import ltd.user.newbee.cloud.common.ServiceResultEnum;
 import ltd.user.newbee.cloud.config.annotation.TokenToAdminUser;
 import ltd.user.newbee.cloud.controller.param.AdminLoginParam;
 import ltd.user.newbee.cloud.controller.param.UpdateAdminNameParam;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.Map;
 
 /**
  * <p>****************************************************************************
@@ -100,5 +101,11 @@ public class NewBeeMallCloudAdminUserController {
 		logger.info("adminUser:{}", adminUser.toString());
 		adminUserService.logout(adminUser.getAdminUserId());
 		return ResultGenerator.genSuccessResult();
+	}
+
+	@RequestMapping(value = "/users/admin/{token}", method = RequestMethod.GET)
+	public Result<Map> getAdminUserByToken(@PathVariable("token") String token) {
+		logger.info("token:{}", token);
+		return ResultGenerator.genSuccessResult(adminUserService.getAdminUserByToken(token));
 	}
 }

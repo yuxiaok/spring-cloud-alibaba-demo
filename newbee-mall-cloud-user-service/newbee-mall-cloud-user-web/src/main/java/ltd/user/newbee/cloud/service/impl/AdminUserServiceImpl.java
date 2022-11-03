@@ -8,10 +8,10 @@
  */
 package ltd.user.newbee.cloud.service.impl;
 
+import ltd.common.newbee.cloud.common.ServiceResultEnum;
 import ltd.common.newbee.cloud.pojo.AdminUserToken;
 import ltd.common.newbee.cloud.util.NumberUtil;
 import ltd.common.newbee.cloud.util.SystemUtil;
-import ltd.user.newbee.cloud.common.ServiceResultEnum;
 import ltd.user.newbee.cloud.dao.AdminUserMapper;
 import ltd.user.newbee.cloud.dao.NewBeeAdminUserTokenMapper;
 import ltd.user.newbee.cloud.entity.AdminUser;
@@ -22,6 +22,8 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -135,5 +137,18 @@ public class AdminUserServiceImpl implements AdminUserService {
 	@Override
 	public Boolean logout(Long adminUserId) {
 		return newBeeAdminUserTokenMapper.deleteByPrimaryKey(adminUserId) > 0;
+	}
+
+	@Override
+	public Map<String, Object> getAdminUserByToken(String token) {
+		ValueOperations<String, AdminUserToken> valueOperations = redisTemplate.opsForValue();
+		AdminUserToken adminUserToken = valueOperations.get(token);
+		AdminUser adminUser = adminUserMapper.selectByPrimaryKey(adminUserToken.getAdminUserId());
+		Map<String, Object> map = new HashMap<>();
+		map.put("adminUserId", adminUser.getAdminUserId());
+		map.put("loginUserName", adminUser.getLoginUserName());
+		map.put("nickName", adminUser.getNickName());
+		map.put("locked", adminUser.getLocked());
+		return map;
 	}
 }

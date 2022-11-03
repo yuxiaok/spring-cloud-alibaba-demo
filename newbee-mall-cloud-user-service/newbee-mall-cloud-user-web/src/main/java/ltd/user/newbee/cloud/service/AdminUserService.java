@@ -10,6 +10,8 @@ package ltd.user.newbee.cloud.service;
 
 import ltd.user.newbee.cloud.entity.AdminUser;
 
+import java.util.Map;
+
 public interface AdminUserService {
 
 	/**
@@ -57,5 +59,5 @@ public interface AdminUserService {
 	 */
 	Boolean logout(Long adminUserId);
 
-
+	Map<String, Object> getAdminUserByToken(String token);
 }
