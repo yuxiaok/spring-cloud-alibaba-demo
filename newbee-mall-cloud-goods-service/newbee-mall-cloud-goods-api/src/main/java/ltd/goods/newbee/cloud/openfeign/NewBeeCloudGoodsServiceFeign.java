@@ -1,5 +1,6 @@
 package ltd.goods.newbee.cloud.openfeign;
 
+import ltd.common.newbee.cloud.dto.NewBeeMallGoodsDTO;
 import ltd.common.newbee.cloud.dto.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(value = "newbee-mall-cloud-goods-service", path = "/goods")
 public interface NewBeeCloudGoodsServiceFeign {
 
-	@GetMapping("/admin/goodsDetail")
-	Result goodsDetail(@RequestParam("goodsId") Long goodsId);
+	@GetMapping("/admin/detail")
+	Result<NewBeeMallGoodsDTO> goodsDetail(@RequestParam("goodsId") Long goodsId);
 }

@@ -41,6 +41,7 @@
         <module>newbee-mall-cloud-user-service</module>
         <module>newbee-mall-cloud-common</module>
         <module>newbee-mall-cloud-goods-service</module>
+        <module>newbee-mall-cloud-recommend-service</module>
     </modules>
 
     <dependencyManagement>

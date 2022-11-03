@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import ltd.common.newbee.cloud.common.Constants;
 import ltd.common.newbee.cloud.common.ServiceResultEnum;
+import ltd.common.newbee.cloud.dto.NewBeeMallGoodsDTO;
 import ltd.common.newbee.cloud.dto.PageQueryUtil;
 import ltd.common.newbee.cloud.dto.Result;
 import ltd.common.newbee.cloud.dto.ResultGenerator;
@@ -170,8 +171,10 @@ public class NewBeeAdminGoodsInfoController {
 
 	@GetMapping("/detail")
 	@ApiOperation(value = "获取单条商品信息", notes = "根据id查询")
-	public Result goodsDetail(@RequestParam("goodsId") Long goodsId) {
+	public Result<NewBeeMallGoodsDTO> goodsDetail(@RequestParam("goodsId") Long goodsId) {
 		NewBeeMallGoods goods = newBeeMallGoodsService.getNewBeeMallGoodsById(goodsId);
-		return ResultGenerator.genSuccessResult(goods);
+		NewBeeMallGoodsDTO newBeeMallGoodsDTO = new NewBeeMallGoodsDTO();
+		BeanUtil.copyProperties(goods, newBeeMallGoodsDTO);
+		return ResultGenerator.genSuccessResult(newBeeMallGoodsDTO);
 	}
 }
