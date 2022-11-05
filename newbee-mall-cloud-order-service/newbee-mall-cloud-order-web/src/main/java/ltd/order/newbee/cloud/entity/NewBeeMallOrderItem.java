@@ -6,31 +6,27 @@
  * Copyright (c) 2019-2021 十三 all rights reserved.
  * 版权所有，侵权必究！
  */
-package ltd.common.newbee.cloud.dto;
+package ltd.order.newbee.cloud.entity;
 
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-public class NewBeeMallShoppingCartItemDTO {
-	private Long cartItemId;
+public class NewBeeMallOrderItem {
+	private Long orderItemId;
 
-	private Long userId;
+	private Long orderId;
 
 	private Long goodsId;
-
-	private Integer goodsCount;
-
-	private Byte isDeleted;
-
-	private Date createTime;
-
-	private Date updateTime;
 
 	private String goodsName;
 
 	private String goodsCoverImg;
 
 	private Integer sellingPrice;
+
+	private Integer goodsCount;
+
+	private Date createTime;
 }

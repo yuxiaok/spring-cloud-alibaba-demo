@@ -6,31 +6,20 @@
  * Copyright (c) 2019-2021 十三 all rights reserved.
  * 版权所有，侵权必究！
  */
-package ltd.common.newbee.cloud.dto;
+package ltd.order.newbee.cloud.config.annotation;
 
-import lombok.Data;
+import java.lang.annotation.*;
 
-import java.util.Date;
+@Target({ElementType.PARAMETER})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface TokenToMallUser {
 
-@Data
-public class NewBeeMallShoppingCartItemDTO {
-	private Long cartItemId;
+	/**
+	 * 当前用户在request中的名字
+	 *
+	 * @return
+	 */
+	String value() default "user";
 
-	private Long userId;
-
-	private Long goodsId;
-
-	private Integer goodsCount;
-
-	private Byte isDeleted;
-
-	private Date createTime;
-
-	private Date updateTime;
-
-	private String goodsName;
-
-	private String goodsCoverImg;
-
-	private Integer sellingPrice;
 }

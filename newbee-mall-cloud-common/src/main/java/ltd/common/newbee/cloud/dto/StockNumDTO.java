@@ -10,27 +10,13 @@ package ltd.common.newbee.cloud.dto;
 
 import lombok.Data;
 
-import java.util.Date;
+/**
+ * 库存修改所需实体
+ */
 
 @Data
-public class NewBeeMallShoppingCartItemDTO {
-	private Long cartItemId;
-
-	private Long userId;
-
+public class StockNumDTO {
 	private Long goodsId;
 
 	private Integer goodsCount;
-
-	private Byte isDeleted;
-
-	private Date createTime;
-
-	private Date updateTime;
-
-	private String goodsName;
-
-	private String goodsCoverImg;
-
-	private Integer sellingPrice;
 }

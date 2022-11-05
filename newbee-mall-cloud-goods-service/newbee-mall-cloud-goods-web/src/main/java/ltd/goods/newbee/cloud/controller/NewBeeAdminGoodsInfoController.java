@@ -13,10 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import ltd.common.newbee.cloud.common.Constants;
 import ltd.common.newbee.cloud.common.ServiceResultEnum;
-import ltd.common.newbee.cloud.dto.NewBeeMallGoodsDTO;
-import ltd.common.newbee.cloud.dto.PageQueryUtil;
-import ltd.common.newbee.cloud.dto.Result;
-import ltd.common.newbee.cloud.dto.ResultGenerator;
+import ltd.common.newbee.cloud.dto.*;
 import ltd.common.newbee.cloud.pojo.LoginAdminUser;
 import ltd.common.newbee.cloud.util.BeanUtil;
 import ltd.goods.newbee.cloud.config.annotation.TokenToAdminUser;
@@ -188,5 +185,14 @@ public class NewBeeAdminGoodsInfoController {
 		List<NewBeeMallGoods> newBeeMallGoods = newBeeMallGoodsService.getNewBeeMallGoodsById(goodsIds);
 		List<NewBeeMallGoodsDTO> newBeeMallGoodsDTOS = BeanUtil.copyList(newBeeMallGoods, NewBeeMallGoodsDTO.class);
 		return ResultGenerator.genSuccessResult(newBeeMallGoodsDTOS);
+	}
+
+	/**
+	 * 修改商品库存
+	 */
+	@PutMapping("/updateStock")
+	@ApiOperation(value = "修改库存", notes = "修改商品库存")
+	public Result updateStock(@RequestBody UpdateStockNumDTO updateStockNumDTO) {
+		return ResultGenerator.genSuccessResult(newBeeMallGoodsService.updateStockNum(updateStockNumDTO.getStockNumDTOList()));
 	}
 }

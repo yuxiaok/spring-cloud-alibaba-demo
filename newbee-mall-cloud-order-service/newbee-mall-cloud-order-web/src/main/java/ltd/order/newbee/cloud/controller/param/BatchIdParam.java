@@ -6,31 +6,14 @@
  * Copyright (c) 2019-2021 十三 all rights reserved.
  * 版权所有，侵权必究！
  */
-package ltd.common.newbee.cloud.dto;
+package ltd.order.newbee.cloud.controller.param;
 
 import lombok.Data;
 
-import java.util.Date;
+import java.io.Serializable;
 
 @Data
-public class NewBeeMallShoppingCartItemDTO {
-	private Long cartItemId;
-
-	private Long userId;
-
-	private Long goodsId;
-
-	private Integer goodsCount;
-
-	private Byte isDeleted;
-
-	private Date createTime;
-
-	private Date updateTime;
-
-	private String goodsName;
-
-	private String goodsCoverImg;
-
-	private Integer sellingPrice;
+public class BatchIdParam implements Serializable {
+	//id数组
+	Long[] ids;
 }

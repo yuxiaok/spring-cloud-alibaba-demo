@@ -12,6 +12,7 @@ import ltd.common.newbee.cloud.common.NewBeeMallCategoryLevelEnum;
 import ltd.common.newbee.cloud.common.ServiceResultEnum;
 import ltd.common.newbee.cloud.dto.PageQueryUtil;
 import ltd.common.newbee.cloud.dto.PageResult;
+import ltd.common.newbee.cloud.dto.StockNumDTO;
 import ltd.common.newbee.cloud.exception.NewBeeMallException;
 import ltd.goods.newbee.cloud.dao.GoodsCategoryMapper;
 import ltd.goods.newbee.cloud.dao.NewBeeMallGoodsMapper;
@@ -108,5 +109,10 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 	@Override
 	public Boolean batchUpdateSellStatus(Long[] ids, int sellStatus) {
 		return goodsMapper.batchUpdateSellStatus(ids, sellStatus) > 0;
+	}
+
+	@Override
+	public boolean updateStockNum(List<StockNumDTO> stockNumDTOList) {
+		return goodsMapper.updateStockNum(stockNumDTOList) > 0;
 	}
 }

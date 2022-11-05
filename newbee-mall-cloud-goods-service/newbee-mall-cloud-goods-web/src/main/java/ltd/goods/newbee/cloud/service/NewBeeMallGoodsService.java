@@ -10,6 +10,7 @@ package ltd.goods.newbee.cloud.service;
 
 import ltd.common.newbee.cloud.dto.PageQueryUtil;
 import ltd.common.newbee.cloud.dto.PageResult;
+import ltd.common.newbee.cloud.dto.StockNumDTO;
 import ltd.goods.newbee.cloud.entity.NewBeeMallGoods;
 
 import java.util.List;
@@ -64,4 +65,6 @@ public interface NewBeeMallGoodsService {
 	NewBeeMallGoods getNewBeeMallGoodsById(Long id);
 
 	List<NewBeeMallGoods> getNewBeeMallGoodsById(List<Long> goodsIds);
+
+	boolean updateStockNum(List<StockNumDTO> stockNumDTOList);
 }

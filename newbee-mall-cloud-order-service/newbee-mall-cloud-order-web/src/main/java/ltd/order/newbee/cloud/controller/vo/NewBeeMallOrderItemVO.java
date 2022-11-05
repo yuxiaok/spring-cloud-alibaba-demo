@@ -6,31 +6,31 @@
  * Copyright (c) 2019-2021 十三 all rights reserved.
  * 版权所有，侵权必究！
  */
-package ltd.common.newbee.cloud.dto;
+package ltd.order.newbee.cloud.controller.vo;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.util.Date;
+import java.io.Serializable;
 
+/**
+ * 订单详情页页面订单项VO
+ */
 @Data
-public class NewBeeMallShoppingCartItemDTO {
-	private Long cartItemId;
+public class NewBeeMallOrderItemVO implements Serializable {
 
-	private Long userId;
-
+	@ApiModelProperty("商品id")
 	private Long goodsId;
 
+	@ApiModelProperty("商品数量")
 	private Integer goodsCount;
 
-	private Byte isDeleted;
-
-	private Date createTime;
-
-	private Date updateTime;
-
+	@ApiModelProperty("商品名称")
 	private String goodsName;
 
+	@ApiModelProperty("商品图片")
 	private String goodsCoverImg;
 
+	@ApiModelProperty("商品价格")
 	private Integer sellingPrice;
 }

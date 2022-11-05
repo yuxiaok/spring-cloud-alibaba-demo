@@ -6,31 +6,22 @@
  * Copyright (c) 2019-2021 十三 all rights reserved.
  * 版权所有，侵权必究！
  */
-package ltd.common.newbee.cloud.dto;
+package ltd.order.newbee.cloud.controller.param;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.util.Date;
+import java.io.Serializable;
 
+/**
+ * 保存订单param
+ */
 @Data
-public class NewBeeMallShoppingCartItemDTO {
-	private Long cartItemId;
+public class SaveOrderParam implements Serializable {
 
-	private Long userId;
+	@ApiModelProperty("订单项id数组")
+	private Long[] cartItemIds;
 
-	private Long goodsId;
-
-	private Integer goodsCount;
-
-	private Byte isDeleted;
-
-	private Date createTime;
-
-	private Date updateTime;
-
-	private String goodsName;
-
-	private String goodsCoverImg;
-
-	private Integer sellingPrice;
+	@ApiModelProperty("地址id")
+	private Long addressId;
 }

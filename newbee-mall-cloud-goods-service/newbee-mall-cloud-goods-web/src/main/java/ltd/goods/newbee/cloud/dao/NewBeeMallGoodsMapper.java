@@ -9,6 +9,7 @@
 package ltd.goods.newbee.cloud.dao;
 
 import ltd.common.newbee.cloud.dto.PageQueryUtil;
+import ltd.common.newbee.cloud.dto.StockNumDTO;
 import ltd.goods.newbee.cloud.entity.NewBeeMallGoods;
 import org.apache.ibatis.annotations.Param;
 
@@ -44,5 +45,7 @@ public interface NewBeeMallGoodsMapper {
 	int batchInsert(@Param("newBeeMallGoodsList") List<NewBeeMallGoods> newBeeMallGoodsList);
 
 	int batchUpdateSellStatus(@Param("orderIds") Long[] orderIds, @Param("sellStatus") int sellStatus);
+
+	int updateStockNum(@Param("stockNumDTOS") List<StockNumDTO> stockNumDTOS);
 
 }

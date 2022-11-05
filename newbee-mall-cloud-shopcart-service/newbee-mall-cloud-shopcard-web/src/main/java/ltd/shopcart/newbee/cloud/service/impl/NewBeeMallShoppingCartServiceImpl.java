@@ -200,7 +200,9 @@ public class NewBeeMallShoppingCartServiceImpl implements NewBeeMallShoppingCart
 	@Override
 	public List<NewBeeMallShoppingCartItemDTO> getCartItemsByCartIds(List<Long> cartItemIds) {
 		List<NewBeeMallShoppingCartItem> newBeeMallShoppingCartItems = newBeeMallShoppingCartItemMapper.selectByCartItemIds(cartItemIds);
-		List<NewBeeMallShoppingCartItemDTO> newBeeMallShoppingCartItemDTOS = BeanUtil.copyList(newBeeMallShoppingCartItems, NewBeeMallShoppingCartItemDTO.class);
+		List<NewBeeMallShoppingCartItemVO> newBeeMallShoppingCartItemVOS = new ArrayList<>();
+		getNewBeeMallShoppingCartItemVOS(newBeeMallShoppingCartItemVOS, newBeeMallShoppingCartItems);
+		List<NewBeeMallShoppingCartItemDTO> newBeeMallShoppingCartItemDTOS = BeanUtil.copyList(newBeeMallShoppingCartItemVOS, NewBeeMallShoppingCartItemDTO.class);
 		return newBeeMallShoppingCartItemDTOS;
 	}
 
