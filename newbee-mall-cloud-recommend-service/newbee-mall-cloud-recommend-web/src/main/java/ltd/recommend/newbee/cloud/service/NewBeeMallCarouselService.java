@@ -10,7 +10,10 @@ package ltd.recommend.newbee.cloud.service;
 
 import ltd.common.newbee.cloud.dto.PageQueryUtil;
 import ltd.common.newbee.cloud.dto.PageResult;
+import ltd.recommend.newbee.cloud.controller.vo.NewBeeMallIndexCarouselVO;
 import ltd.recommend.newbee.cloud.entity.Carousel;
+
+import java.util.List;
 
 public interface NewBeeMallCarouselService {
 
@@ -29,4 +32,6 @@ public interface NewBeeMallCarouselService {
 	Carousel getCarouselById(Integer id);
 
 	Boolean deleteBatch(Long[] ids);
+
+	List<NewBeeMallIndexCarouselVO> getCarouselsForIndex(int number);
 }

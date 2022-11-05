@@ -6,43 +6,29 @@
  * Copyright (c) 2019-2021 十三 all rights reserved.
  * 版权所有，侵权必究！
  */
-package ltd.goods.newbee.cloud.entity;
+package ltd.recommend.newbee.cloud.controller.vo;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.util.Date;
+import java.io.Serializable;
 
+/**
+ * 首页配置商品VO
+ */
 @Data
-public class NewBeeMallGoods {
+public class NewBeeMallIndexConfigGoodsVO implements Serializable {
+
+	@ApiModelProperty("商品id")
 	private Long goodsId;
-
+	@ApiModelProperty("商品名称")
 	private String goodsName;
-
+	@ApiModelProperty("商品简介")
 	private String goodsIntro;
-
-	private Long goodsCategoryId;
-
+	@ApiModelProperty("商品图片地址")
 	private String goodsCoverImg;
-
-	private String goodsCarousel;
-
-	private Integer originalPrice;
-
+	@ApiModelProperty("商品价格")
 	private Integer sellingPrice;
-
-	private Integer stockNum;
-
+	@ApiModelProperty("商品标签")
 	private String tag;
-
-	private Byte goodsSellStatus;
-
-	private Integer createUser;
-
-	private Date createTime;
-
-	private Integer updateUser;
-
-	private Date updateTime;
-
-	private String goodsDetailContent;
 }

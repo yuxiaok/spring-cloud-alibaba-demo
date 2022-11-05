@@ -1,9 +1,11 @@
 package ltd.user.newbee.cloud.openfeign;
 
 import ltd.common.newbee.cloud.dto.Result;
+import ltd.common.newbee.cloud.pojo.MallUserDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
@@ -21,8 +23,11 @@ import java.util.Map;
  * </p>
  */
 @FeignClient(value = "newbee-mall-cloud-user-service", path = "/users")
-public interface NewBeeCloudAdminUserServiceFeign {
+public interface NewBeeCloudUserServiceFeign {
 
 	@GetMapping(value = "/admin/{token}")
 	Result<Map> getAdminUserByToken(@PathVariable(value = "token") String token);
+
+	@GetMapping(value = "/mall/getDetailByToken")
+	Result<MallUserDTO> getMallUserByToken(@RequestParam(value = "token") String token);
 }

@@ -6,6 +6,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 /**
  * <p>****************************************************************************
  * </p>
@@ -26,4 +28,7 @@ public interface NewBeeCloudGoodsServiceFeign {
 
 	@GetMapping("/admin/detail")
 	Result<NewBeeMallGoodsDTO> goodsDetail(@RequestParam("goodsId") Long goodsId);
+
+	@GetMapping("/admin/listByGoodsIds")
+	Result<List<NewBeeMallGoodsDTO>> getNewBeeMallGoodsByIds(@RequestParam("goodsIds") List<Long> goodsIds);
 }

@@ -13,15 +13,20 @@ import ltd.common.newbee.cloud.dto.NewBeeMallGoodsDTO;
 import ltd.common.newbee.cloud.dto.PageQueryUtil;
 import ltd.common.newbee.cloud.dto.PageResult;
 import ltd.common.newbee.cloud.dto.Result;
+import ltd.common.newbee.cloud.util.BeanUtil;
 import ltd.goods.newbee.cloud.openfeign.NewBeeCloudGoodsServiceFeign;
+import ltd.recommend.newbee.cloud.controller.vo.NewBeeMallIndexConfigGoodsVO;
 import ltd.recommend.newbee.cloud.dao.IndexConfigMapper;
 import ltd.recommend.newbee.cloud.entity.IndexConfig;
 import ltd.recommend.newbee.cloud.service.NewBeeMallIndexConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class NewBeeMallIndexConfigServiceImpl implements NewBeeMallIndexConfigService {
@@ -92,4 +97,32 @@ public class NewBeeMallIndexConfigServiceImpl implements NewBeeMallIndexConfigSe
 		//删除数据
 		return indexConfigMapper.deleteBatch(ids) > 0;
 	}
+
+	@Override
+	public List<NewBeeMallIndexConfigGoodsVO> getConfigGoodsesForIndex(int configType, int number) {
+		List<NewBeeMallIndexConfigGoodsVO> newBeeMallIndexConfigGoodsVOS = new ArrayList<>(number);
+		List<IndexConfig> indexConfigs = indexConfigMapper.findIndexConfigsByTypeAndNum(configType, number);
+		if (!CollectionUtils.isEmpty(indexConfigs)) {
+			//取出所有的goodsId
+			List<Long> goodsIds = indexConfigs.stream().map(IndexConfig::getGoodsId).collect(Collectors.toList());
+			//根据商品id列表查询对应的商品数据
+			Result<List<NewBeeMallGoodsDTO>> result = newBeeCloudGoodsServiceFeign.getNewBeeMallGoodsByIds(goodsIds);
+			if (result == null || result.getResultCode() != 200 || CollectionUtils.isEmpty(result.getData())) {
+				// 未查询到数据 返回空链表（也可以直接在这里丢出异常）
+				return newBeeMallIndexConfigGoodsVOS;
+			}
+			newBeeMallIndexConfigGoodsVOS = BeanUtil.copyList(result.getData(), NewBeeMallIndexConfigGoodsVO.class);
+			// 转换为VO对象
+			for (NewBeeMallIndexConfigGoodsVO newBeeMallIndexConfigGoodsVO : newBeeMallIndexConfigGoodsVOS) {
+				String goodsName = newBeeMallIndexConfigGoodsVO.getGoodsName();
+				// 字符串过长导致文字超出的问题
+				if (goodsName.length() > 30) {
+					goodsName = goodsName.substring(0, 30) + "...";
+					newBeeMallIndexConfigGoodsVO.setGoodsName(goodsName);
+				}
+			}
+		}
+		return newBeeMallIndexConfigGoodsVOS;
+	}
+
 }

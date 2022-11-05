@@ -9,6 +9,7 @@
 package ltd.user.newbee.cloud.config;
 
 import ltd.common.newbee.cloud.pojo.AdminUserToken;
+import ltd.common.newbee.cloud.pojo.MallUserToken;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -28,13 +29,13 @@ import java.util.List;
 
 @Configuration
 @EnableOpenApi
-public class AdminUserSwagger3Config {
+public class UserSwagger3Config {
 
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.OAS_30)
 				.apiInfo(apiInfo())
-				.ignoredParameterTypes(AdminUserToken.class)
+				.ignoredParameterTypes(AdminUserToken.class, MallUserToken.class)
 				.select()
 				.apis(RequestHandlerSelectors.basePackage("ltd.user.newbee.cloud.controller"))
 				.paths(PathSelectors.any())

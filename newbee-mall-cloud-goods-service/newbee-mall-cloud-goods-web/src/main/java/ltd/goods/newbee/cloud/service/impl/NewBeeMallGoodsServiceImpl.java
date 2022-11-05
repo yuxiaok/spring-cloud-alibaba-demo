@@ -97,6 +97,15 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 	}
 
 	@Override
+	public List<NewBeeMallGoods> getNewBeeMallGoodsById(List<Long> goodsIds) {
+		List<NewBeeMallGoods> newBeeMallGoods = goodsMapper.selectByPrimaryKeys(goodsIds);
+		if (CollectionUtils.isEmpty(newBeeMallGoods)) {
+			NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
+		}
+		return newBeeMallGoods;
+	}
+
+	@Override
 	public Boolean batchUpdateSellStatus(Long[] ids, int sellStatus) {
 		return goodsMapper.batchUpdateSellStatus(ids, sellStatus) > 0;
 	}

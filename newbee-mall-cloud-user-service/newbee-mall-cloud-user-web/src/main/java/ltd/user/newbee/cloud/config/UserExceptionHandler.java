@@ -24,7 +24,7 @@ import java.util.Objects;
  * newbee-mall全局异常处理
  */
 @RestControllerAdvice
-public class AdminUserExceptionHandler {
+public class UserExceptionHandler {
 
 	@ExceptionHandler(BindException.class)
 	public Object bindException(BindException e) {

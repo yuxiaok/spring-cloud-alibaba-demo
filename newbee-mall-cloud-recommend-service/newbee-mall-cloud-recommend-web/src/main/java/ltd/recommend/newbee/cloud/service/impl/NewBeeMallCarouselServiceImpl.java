@@ -11,12 +11,16 @@ package ltd.recommend.newbee.cloud.service.impl;
 import ltd.common.newbee.cloud.common.ServiceResultEnum;
 import ltd.common.newbee.cloud.dto.PageQueryUtil;
 import ltd.common.newbee.cloud.dto.PageResult;
+import ltd.common.newbee.cloud.util.BeanUtil;
+import ltd.recommend.newbee.cloud.controller.vo.NewBeeMallIndexCarouselVO;
 import ltd.recommend.newbee.cloud.dao.CarouselMapper;
 import ltd.recommend.newbee.cloud.entity.Carousel;
 import ltd.recommend.newbee.cloud.service.NewBeeMallCarouselService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -71,5 +75,17 @@ public class NewBeeMallCarouselServiceImpl implements NewBeeMallCarouselService 
 		}
 		//删除数据
 		return carouselMapper.deleteBatch(ids) > 0;
+	}
+
+	@Override
+	public List<NewBeeMallIndexCarouselVO> getCarouselsForIndex(int number) {
+		List<NewBeeMallIndexCarouselVO> newBeeMallIndexCarouselVOS = new ArrayList<>(number);
+		// 读取MySQL，查询固定数量的轮播图数据
+		List<Carousel> carousels = carouselMapper.findCarouselsByNum(number);
+		if (!CollectionUtils.isEmpty(carousels)) {
+			// 将数据转换为需要的VO类型
+			newBeeMallIndexCarouselVOS = BeanUtil.copyList(carousels, NewBeeMallIndexCarouselVO.class);
+		}
+		return newBeeMallIndexCarouselVOS;
 	}
 }

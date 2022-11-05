@@ -14,7 +14,7 @@ import ltd.common.newbee.cloud.dto.Result;
 import ltd.common.newbee.cloud.exception.NewBeeMallException;
 import ltd.common.newbee.cloud.pojo.LoginAdminUser;
 import ltd.goods.newbee.cloud.config.annotation.TokenToAdminUser;
-import ltd.user.newbee.cloud.openfeign.NewBeeCloudAdminUserServiceFeign;
+import ltd.user.newbee.cloud.openfeign.NewBeeCloudUserServiceFeign;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -29,7 +29,7 @@ import java.util.Map;
 public class TokenToAdminUserMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
 	@Autowired
-	private NewBeeCloudAdminUserServiceFeign newBeeCloudAdminUserServiceFeign;
+	private NewBeeCloudUserServiceFeign newBeeCloudUserServiceFeign;
 
 	public TokenToAdminUserMethodArgumentResolver() {
 	}
@@ -48,7 +48,7 @@ public class TokenToAdminUserMethodArgumentResolver implements HandlerMethodArgu
 			String token = webRequest.getHeader("token");
 			if (null != token && !"".equals(token) && token.length() == Constants.TOKEN_LENGTH) {
 
-				Result<Map> result = newBeeCloudAdminUserServiceFeign.getAdminUserByToken(token);
+				Result<Map> result = newBeeCloudUserServiceFeign.getAdminUserByToken(token);
 				if (result == null || result.getResultCode() != 200 || result.getData() == null) {
 					NewBeeMallException.fail("ADMIN_NOT_LOGIN_ERROR");
 				}

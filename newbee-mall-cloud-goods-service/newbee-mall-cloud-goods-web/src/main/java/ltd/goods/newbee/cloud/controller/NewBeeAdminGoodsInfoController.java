@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -176,5 +177,16 @@ public class NewBeeAdminGoodsInfoController {
 		NewBeeMallGoodsDTO newBeeMallGoodsDTO = new NewBeeMallGoodsDTO();
 		BeanUtil.copyProperties(goods, newBeeMallGoodsDTO);
 		return ResultGenerator.genSuccessResult(newBeeMallGoodsDTO);
+	}
+
+	/**
+	 * 根据ids查询商品列表
+	 */
+	@GetMapping("/listByGoodsIds")
+	@ApiOperation(value = "根据ids查询商品列表", notes = "根据ids查询")
+	public Result<List<NewBeeMallGoodsDTO>> getNewBeeMallGoodsByIds(@RequestParam("goodsIds") List<Long> goodsIds) {
+		List<NewBeeMallGoods> newBeeMallGoods = newBeeMallGoodsService.getNewBeeMallGoodsById(goodsIds);
+		List<NewBeeMallGoodsDTO> newBeeMallGoodsDTOS = BeanUtil.copyList(newBeeMallGoods, NewBeeMallGoodsDTO.class);
+		return ResultGenerator.genSuccessResult(newBeeMallGoodsDTOS);
 	}
 }

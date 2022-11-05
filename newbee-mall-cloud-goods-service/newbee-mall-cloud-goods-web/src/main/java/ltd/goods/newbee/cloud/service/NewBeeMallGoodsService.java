@@ -62,4 +62,6 @@ public interface NewBeeMallGoodsService {
 	 * @return
 	 */
 	NewBeeMallGoods getNewBeeMallGoodsById(Long id);
+
+	List<NewBeeMallGoods> getNewBeeMallGoodsById(List<Long> goodsIds);
 }

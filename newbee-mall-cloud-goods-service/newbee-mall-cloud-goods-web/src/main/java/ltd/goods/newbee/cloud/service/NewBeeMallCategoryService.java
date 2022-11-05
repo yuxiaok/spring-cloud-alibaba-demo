@@ -10,6 +10,7 @@ package ltd.goods.newbee.cloud.service;
 
 import ltd.common.newbee.cloud.dto.PageQueryUtil;
 import ltd.common.newbee.cloud.dto.PageResult;
+import ltd.goods.newbee.cloud.controller.vo.NewBeeMallIndexCategoryVO;
 import ltd.goods.newbee.cloud.entity.GoodsCategory;
 
 import java.util.List;
@@ -40,4 +41,6 @@ public interface NewBeeMallCategoryService {
 	 * @return
 	 */
 	List<GoodsCategory> selectByLevelAndParentIdsAndNumber(List<Long> parentIds, int categoryLevel);
+
+	List<NewBeeMallIndexCategoryVO> getCategoriesForIndex();
 }

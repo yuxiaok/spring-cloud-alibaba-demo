@@ -10,7 +10,10 @@ package ltd.recommend.newbee.cloud.service;
 
 import ltd.common.newbee.cloud.dto.PageQueryUtil;
 import ltd.common.newbee.cloud.dto.PageResult;
+import ltd.recommend.newbee.cloud.controller.vo.NewBeeMallIndexConfigGoodsVO;
 import ltd.recommend.newbee.cloud.entity.IndexConfig;
+
+import java.util.List;
 
 public interface NewBeeMallIndexConfigService {
 
@@ -29,4 +32,6 @@ public interface NewBeeMallIndexConfigService {
 	IndexConfig getIndexConfigById(Long id);
 
 	Boolean deleteBatch(Long[] ids);
+
+	List<NewBeeMallIndexConfigGoodsVO> getConfigGoodsesForIndex(int configType, int number);
 }
