@@ -43,6 +43,7 @@
         <module>newbee-mall-cloud-goods-service</module>
         <module>newbee-mall-cloud-recommend-service</module>
         <module>newbee-mall-cloud-gateway-user</module>
+        <module>newbee-mall-cloud-shopcart-service</module>
     </modules>
 
     <dependencyManagement>
