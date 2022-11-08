@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 /**
@@ -37,4 +38,8 @@ public class DataSourceProxyConfig {
 		return new DataSourceProxy(druidDataSource);
 	}
 
+	@PostConstruct
+	public void setProperties() {
+		System.setProperty("druid.mysql.usePingMethod", "false");
+	}
 }

@@ -8,6 +8,7 @@
  */
 package ltd.order.newbee.cloud.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -44,6 +45,7 @@ public class NewBeeMallOrderAPI {
 	@Resource
 	private NewBeeMallUserAddressService newBeeMallUserAddressService;
 
+	@SentinelResource
 	@PostMapping("/saveOrder")
 	@ApiOperation(value = "生成订单接口", notes = "传参为地址id和待结算的购物项id数组")
 	public Result<String> saveOrder(@ApiParam(value = "订单参数") @RequestBody SaveOrderParam saveOrderParam,

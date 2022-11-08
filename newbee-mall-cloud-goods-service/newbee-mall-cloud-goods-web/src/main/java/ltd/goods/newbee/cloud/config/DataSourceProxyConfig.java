@@ -1,14 +1,9 @@
-package ltd.order.newbee.cloud.config;
+package ltd.goods.newbee.cloud.config;
 
-import com.alibaba.druid.pool.DruidDataSource;
-import io.seata.rm.datasource.DataSourceProxy;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
+import io.seata.spring.annotation.datasource.EnableAutoDataSourceProxy;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 
 import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
 
 /**
  * <p>****************************************************************************
@@ -24,19 +19,8 @@ import javax.sql.DataSource;
  * </p>
  */
 @Configuration
+@EnableAutoDataSourceProxy
 public class DataSourceProxyConfig {
-
-	@Bean
-	@ConfigurationProperties(prefix = "spring.datasource")
-	public DruidDataSource druidDataSource() {
-		return new DruidDataSource();
-	}
-
-	@Primary
-	@Bean("dataSource")
-	public DataSource dataSource(DruidDataSource druidDataSource) {
-		return new DataSourceProxy(druidDataSource);
-	}
 
 	/*
 	 * 解决druid 日志报错：discard long time none received connection:xxx
