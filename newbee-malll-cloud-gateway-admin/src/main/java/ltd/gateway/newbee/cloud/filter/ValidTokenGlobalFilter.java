@@ -22,7 +22,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * <p>****************************************************************************
@@ -40,13 +42,23 @@ import java.util.Objects;
 @Component
 public class ValidTokenGlobalFilter implements GlobalFilter, Ordered {
 
+	private static final Set<String> ignoreURLs = new HashSet<>();
+
+	static {
+		ignoreURLs.add("/users/admin/login");
+		ignoreURLs.add("/indexConfigs/admin/swagger/v3/api-docs");
+		ignoreURLs.add("/orders/admin/swagger/v3/api-docs");
+		ignoreURLs.add("/users/admin/swagger/v3/api-docs");
+		ignoreURLs.add("/goods/admin/swagger/v3/api-docs");
+	}
+
 	@Autowired
 	private RedisTemplate redisTemplate;
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		//如果是登录接口，直接放行
-		if ("/users/admin/login".equals(exchange.getRequest().getURI().getPath())) {
+		if (ignoreURLs.contains(exchange.getRequest().getURI().getPath())) {
 			return chain.filter(exchange);
 		}
 

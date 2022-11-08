@@ -47,6 +47,11 @@ public class ValidMallUserTokenGlobalFilter implements GlobalFilter, Ordered {
 		ignoreURLs.add("/users/mall/register");
 		ignoreURLs.add("/categories/mall/listAll");
 		ignoreURLs.add("/mall/index/recommondInfos");
+		ignoreURLs.add("/indexConfigs/swagger/v3/api-docs");
+		ignoreURLs.add("/carts/swagger/v3/api-docs");
+		ignoreURLs.add("/orders/swagger/v3/api-docs");
+		ignoreURLs.add("/users/swagger/v3/api-docs");
+		ignoreURLs.add("/goods/swagger/v3/api-docs");
 	}
 
 	@Autowired

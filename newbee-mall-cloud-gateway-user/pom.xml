@@ -16,6 +16,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+        </dependency>
+        <dependency>
             <groupId>ltd.newbee.cloud</groupId>
             <artifactId>newbee-mall-cloud-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
