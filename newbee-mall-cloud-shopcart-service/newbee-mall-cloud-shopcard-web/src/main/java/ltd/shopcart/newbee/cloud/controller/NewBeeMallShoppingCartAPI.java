@@ -8,6 +8,7 @@
  */
 package ltd.shopcart.newbee.cloud.controller;
 
+import io.seata.core.context.RootContext;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import ltd.common.newbee.cloud.common.Constants;
@@ -25,6 +26,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -137,7 +139,8 @@ public class NewBeeMallShoppingCartAPI {
 
 	@DeleteMapping("/deleteByCartItemIds")
 	@ApiOperation(value = "批量删除购物项", notes = "")
-	public Result<Boolean> deleteByCartItemIds(@RequestParam("cartItemIds") List<Long> cartItemIds) {
+	public Result<Boolean> deleteByCartItemIds(@RequestParam("cartItemIds") List<Long> cartItemIds, HttpServletRequest request) {
+		System.out.println(RootContext.getXID());
 		if (CollectionUtils.isEmpty(cartItemIds)) {
 			return ResultGenerator.genFailResult("error param");
 		}

@@ -24,7 +24,7 @@ import java.util.List;
  * <p>****************************************************************************
  * </p>
  */
-@FeignClient(value = "newbee-mall-cloud-shopcard-service", path = "/shop-cart")
+@FeignClient(value = "newbee-mall-cloud-shop-cart-service", path = "/shop-cart")
 public interface NewBeeCloudShopCartServiceFeign {
 
 	@GetMapping(value = "/listByCartItemIds")

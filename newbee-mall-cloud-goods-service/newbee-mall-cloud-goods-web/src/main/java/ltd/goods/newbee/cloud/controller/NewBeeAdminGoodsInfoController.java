@@ -193,6 +193,8 @@ public class NewBeeAdminGoodsInfoController {
 	@PutMapping("/updateStock")
 	@ApiOperation(value = "修改库存", notes = "修改商品库存")
 	public Result updateStock(@RequestBody UpdateStockNumDTO updateStockNumDTO) {
+		//模拟分布式事务
+//		int i = 1 / 0;
 		return ResultGenerator.genSuccessResult(newBeeMallGoodsService.updateStockNum(updateStockNumDTO.getStockNumDTOList()));
 	}
 }
